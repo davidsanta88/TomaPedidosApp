@@ -1,0 +1,18 @@
+# Ignore logs
+*.log
+build_output.txt
+build_errors*.txt
+
+# Visual Studio / .NET
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+
+# Frontend / Node.js
+node_modules/
+dist/
+.env
+
+# MacOS
+.DS_Store
