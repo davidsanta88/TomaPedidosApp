@@ -38,11 +38,11 @@ namespace TomaPedidos.API.Controllers
             _db = db;
         }
 
-        [HttpGet("{nit}")]
-        public async Task<IActionResult> GetBranches(string nit)
+        [HttpGet("{cliente}")]
+        public async Task<IActionResult> GetBranches(string cliente)
         {
             // Placeholder SP name: SP_GetBranchesByCustomer
-            var branches = await _db.QueryAsync<Branch>("SP_GetBranchesByCustomer", new { Nit = nit });
+            var branches = await _db.QueryAsync<Branch>("sp_tmp_clientes_obtener", new { Cliente = cliente });
             return Ok(branches);
         }
     }

@@ -5,7 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+
+// ✅ Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// ❌ Quitar esto
+// builder.Services.AddOpenApi();
 
 // Register Database Services
 builder.Services.AddScoped<IDatabaseService, DatabaseService>();
@@ -24,11 +30,15 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ✅ Activar Swagger
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+// ❌ Quitar esto
+// app.MapOpenApi();
 
 // Initialize Database
 try
@@ -37,7 +47,6 @@ try
     {
         var db = scope.ServiceProvider.GetRequiredService<IDatabaseService>();
         await db.InitializeDatabaseAsync();
-        // await db.InitializeStoredProceduresAsync();
     }
 }
 catch (Exception ex)
@@ -45,7 +54,7 @@ catch (Exception ex)
     Console.WriteLine($"Warning: Database initialization failed: {ex.Message}");
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 
@@ -54,4 +63,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-

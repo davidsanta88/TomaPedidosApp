@@ -35,16 +35,15 @@ namespace TomaPedidos.API.Controllers
                 request.Header.Id = orderId;
 
                 var pedido = request.Header;
-                Guid uuid = Guid.NewGuid();
-
+   
                 if (pedido.Id.HasValue)
                 {
                     ObjLogSiesa objLogSiesa = new ObjLogSiesa
                     {
-                        Referencia = uuid.ToString(),
+                        Referencia = orderId.ToString(),
                         Proceso = "Cargar Documento- DocumetosV5",
                         Conector = "DocumentosV5",
-                        Parametros = "@UUID" + uuid.ToString()
+                        Parametros = "@OrdenId" + orderId.ToString()
                     };
 
                     string XML = "";
